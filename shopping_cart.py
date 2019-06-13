@@ -51,6 +51,24 @@ while True:
 
 # INFO DISPLAY/OUTPUT
 
+# A grocery store name of your choice &
+# A grocery store phone number and/or website URL and/or address of choice
+print("------------------------------")
+print("BEST IN TOWN GROCERY")
+print("100 UNIVERSITY ROAD")
+print("NEW YORK, NY 10020")
+print("TEL: 212-555-7777")
+print("WWW.BESTINTOWNGROCERY.COM")
+print("------------------------------")
+
+# The date and time of the beginning of the checkout process, formatted in a human-friendly way (e.g. 2019-06-06 11:31 AM)
+# Referece: The datetime Module guide (office Python guide)
+
+from datetime import datetime
+t = datetime.today()
+print("CHECKOUT AT: " + t.strftime("%Y-%m-%d %I:%M %p"))
+
+
 
 # print(selected_ids)
 
@@ -64,9 +82,8 @@ for selected_id in selected_ids:
 
 print("TOTAL PRICE: " + str(total_price)) ## format as USD
 
-# A grocery store name of your choice
-# A grocery store phone number and/or website URL and/or address of choice
-# The date and time of the beginning of the checkout process, formatted in a human-friendly way (e.g. 2019-06-06 11:31 AM)
+
+
 # The name and price of each shopping cart item, price being formatted as US dollars and cents (e.g. $1.50)
 # The total cost of all shopping cart items, formatted as US dollars and cents (e.g. $4.50), calculated as the sum of their prices
 # The amount of tax owed (e.g. $0.39), calculated by multiplying the total cost by a New York City sales tax rate of 8.75% (for the purposes of this project, groceries are not exempt from sales tax)
