@@ -84,8 +84,6 @@ for selected_id in selected_ids:
         subtotal_price = subtotal_price + matching_product["price"]
         print("... "  + matching_product["name"] + " (" + usd(matching_product["price"])+")")
 
-print("TOTAL PRICE: " + usd(subtotal_price)) ## format as USD
-
 # The amount of tax owed (e.g. $0.39), calculated by multiplying the total cost by a New York City sales tax rate of 8.75% (for the purposes of this project, groceries are not exempt from sales tax)
 
 tax_rate = 0.0875
