@@ -30,7 +30,7 @@ products = [
 valid_ids = [str(p["id"]) for p in products] # doing comparisons with string versions of these ids
 #print("VALID IDS:", valid_ids)
 
-total_price = 0
+subtotal_price = 0
 selected_ids = []
 
 while True:
@@ -71,6 +71,7 @@ print("------------------------------")
 
 
 # The name and price of each shopping cart item, price being formatted as US dollars and cents (e.g. $1.50)
+# The total cost of all shopping cart items, formatted as US dollars and cents (e.g. $4.50), calculated as the sum of their prices
 
 def usd(store_price):
     return '${:,.2f}'.format(store_price)
@@ -80,17 +81,27 @@ print("SELECTED PRODUCT(S): ")
 for selected_id in selected_ids:
         matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
         matching_product = matching_products[0]
-        total_price = total_price + matching_product["price"]
+        subtotal_price = subtotal_price + matching_product["price"]
         print("... "  + matching_product["name"] + " (" + usd(matching_product["price"])+")")
 
+print("TOTAL PRICE: " + usd(subtotal_price)) ## format as USD
 
-
-print("TOTAL PRICE: " + usd(total_price)) ## format as USD
-
-
-
-
-# The total cost of all shopping cart items, formatted as US dollars and cents (e.g. $4.50), calculated as the sum of their prices
 # The amount of tax owed (e.g. $0.39), calculated by multiplying the total cost by a New York City sales tax rate of 8.75% (for the purposes of this project, groceries are not exempt from sales tax)
+
+tax_rate = 0.0875
+sales_tax = subtotal_price * tax_rate
+total_price = subtotal_price + sales_tax
+
+print("------------------------------")
+print("SUBTOTAL:      " + usd(subtotal_price))
+print("TAX (8.75%):   " + usd(sales_tax))
+print("TOTAL:         " + usd(total_price))
+print("------------------------------")
+
+print("THANK YOU FOR SHOPPING AT BEST IN TOWN GROCERY. WE HOPE TO SEE YOU AGAIN !")
+print("------------------------------")
+
+
+
 # The total amount owed, formatted as US dollars and cents (e.g. $4.89), calculated by adding together the amount of tax owed plus the total cost of all shopping cart items
 # A friendly message thanking the customer and/or encouraging the customer to shop again
