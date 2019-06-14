@@ -71,7 +71,6 @@ print("------------------------------")
 
 
 # The name and price of each shopping cart item, price being formatted as US dollars and cents (e.g. $1.50)
-# The total cost of all shopping cart items, formatted as US dollars and cents (e.g. $4.50), calculated as the sum of their prices
 
 def usd(store_price):
     return '${:,.2f}'.format(store_price)
@@ -84,22 +83,23 @@ for selected_id in selected_ids:
         subtotal_price = subtotal_price + matching_product["price"]
         print("... "  + matching_product["name"] + " (" + usd(matching_product["price"])+")")
 
+# The total cost of all shopping cart items, formatted as US dollars and cents (e.g. $4.50), calculated as the sum of their prices
 # The amount of tax owed (e.g. $0.39), calculated by multiplying the total cost by a New York City sales tax rate of 8.75% (for the purposes of this project, groceries are not exempt from sales tax)
 
 tax_rate = 0.0875
 sales_tax = subtotal_price * tax_rate
 total_price = subtotal_price + sales_tax
 
+# The total amount owed, formatted as US dollars and cents (e.g. $4.89), calculated by adding together the amount of tax owed plus the total cost of all shopping cart items
 print("------------------------------")
 print("SUBTOTAL:      " + usd(subtotal_price))
 print("TAX (8.75%):   " + usd(sales_tax))
 print("TOTAL:         " + usd(total_price))
 print("------------------------------")
 
+# A friendly message thanking the customer and/or encouraging the customer to shop again
 print("THANK YOU FOR SHOPPING AT BEST IN TOWN GROCERY. WE HOPE TO SEE YOU AGAIN !")
 print("------------------------------")
 
 
 
-# The total amount owed, formatted as US dollars and cents (e.g. $4.89), calculated by adding together the amount of tax owed plus the total cost of all shopping cart items
-# A friendly message thanking the customer and/or encouraging the customer to shop again
