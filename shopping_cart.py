@@ -72,7 +72,7 @@ print("------------------------------")
 
 # The name and price of each shopping cart item, price being formatted as US dollars and cents (e.g. $1.50)
 
-def usd(store_price):
+def to_usd(store_price):
     return '${:,.2f}'.format(store_price)
 
 print("SELECTED PRODUCT(S): ")
@@ -81,7 +81,7 @@ for selected_id in selected_ids:
         matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
         matching_product = matching_products[0]
         subtotal_price = subtotal_price + matching_product["price"]
-        print("... "  + matching_product["name"] + " (" + usd(matching_product["price"])+")")
+        print("... "  + matching_product["name"] + " (" + to_usd(matching_product["price"])+")")
 
 # The total cost of all shopping cart items, formatted as US dollars and cents (e.g. $4.50), calculated as the sum of their prices
 # The amount of tax owed (e.g. $0.39), calculated by multiplying the total cost by a New York City sales tax rate of 8.75% (for the purposes of this project, groceries are not exempt from sales tax)
@@ -92,9 +92,10 @@ total_price = subtotal_price + sales_tax
 
 # The total amount owed, formatted as US dollars and cents (e.g. $4.89), calculated by adding together the amount of tax owed plus the total cost of all shopping cart items
 print("------------------------------")
-print("SUBTOTAL:      " + usd(subtotal_price))
-print("TAX (8.75%):   " + usd(sales_tax))
-print("TOTAL:         " + usd(total_price))
+print("SUBTOTAL:      " + to_usd(subtotal_price))
+print("TAX (8.75%):   " + to_usd(sales_tax))
+print("               " + "-----")
+print("TOTAL:         " + to_usd(total_price))
 print("------------------------------")
 
 # A friendly message thanking the customer and/or encouraging the customer to shop again
