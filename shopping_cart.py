@@ -125,15 +125,13 @@ if __name__ == "__main__":
 
     import os, time
 
-    ltime = time.localtime()
-    timestamp = time.strftime('%b-%d-%Y_%H%M', ltime)
-    BACKUP_NAME = ("backup-" + timestamp)
     # def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):
     #    return datetime.datetime.now().strftime(fmt).format(fname=fname)
 
 
     # Writing text file
-    myFile = open((os.path.join(os.path.dirname(__file__), "receipts", "myreceipt.txt")), "wt")
+    file_name = t.strftime("%Y-%m-%d-%H-%M-%S.%f") + ".txt" 
+    myFile = open((os.path.join(os.path.dirname(__file__), "receipts", file_name)), "wt")
     myFile.write("------------------------------\n")
     myFile.write("YOUR RECEIPT:\n")
     myFile.write("------------------------------\n")
