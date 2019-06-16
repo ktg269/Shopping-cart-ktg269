@@ -24,9 +24,11 @@ def test_find_product(): # to test find_product using one example (name)
     assert matching_product["department"] == "pantry"
     assert matching_product["price"] == 7.99
 
-    with pytest.raises(IndexError):  # Looking up pre-defined error: https://stackoverflow.com/questions/52077389/how-to-only-report-failures-from-a-type-of-exception-with-pytest
+    with pytest.raises(IndexError):  # Looking up pre-defined, IndexError: https://stackoverflow.com/questions/52077389/how-to-only-report-failures-from-a-type-of-exception-with-pytest
         find_product("10000000", products)
 
+#def test_human_friendly_timestamp(): # to test timestamp
+    #assert human_friendly_timestamp("6/16/2019") == "t.strftime("%Y-%m-%d %I:%M %p\n")"
 
 #from shopping_cart import calculate_total_price
 

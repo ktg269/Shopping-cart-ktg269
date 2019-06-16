@@ -1,9 +1,5 @@
 #shopping_cart.py
 
-
-
-
-
 def to_usd(store_price):
     return '${:,.2f}'.format(store_price)
 
@@ -12,6 +8,10 @@ def find_product(item_id, item_products):
     matching_product = matching_products[0]
     return matching_product
 
+def human_friendly_timestamp(time):
+    from datetime import datetime
+    t = datetime.today()
+    return t.strftime("%Y-%m-%d %I:%M %p")
 
 #def calculate_total_price(store_total_price):
 #    sales_tax = subtotal_price * tax_rate
@@ -168,14 +168,9 @@ if __name__ == "__main__":
 
     # Ask whether email-receipt is desired
     
-    receipt_print = input("WOULD YOU LIKE YOUR RECEIPT VIA EMAIL? y/n:")
+    receipt_print = input("WOULD YOU LIKE YOUR RECEIPT VIA EMAIL? Press y to receive or any other key to finish:")
     while True:
         
-        if receipt_print =="n":
-                    
-            print("PLEASE TAKE YOUR PAPER RECEIPT. THANK YOU !")
-            break
-
         # sending email receipt
 
         if receipt_print =="y":   
@@ -194,6 +189,7 @@ if __name__ == "__main__":
             template_data = {
                 "total_price_usd": str(to_usd(total_price)),
                 "human_friendly_timestamp": str(t.strftime("%Y-%m-%d %I:%M %p")),
+                #"products": str(matching_product)
             }
             client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
             print("CLIENT:", type(client))
@@ -239,5 +235,9 @@ if __name__ == "__main__":
             break
 
         else:
-            print("PLEASE CHOOSE y or n")
+            print("PLEASE TAKE YOUR PAPER RECEIPT. THANK YOU !")
+            break
 
+
+                    
+            
