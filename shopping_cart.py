@@ -194,17 +194,13 @@ if __name__ == "__main__":
             template_data = {
                 "total_price_usd": str(to_usd(total_price)),
                 "human_friendly_timestamp": str(t.strftime("%Y-%m-%d %I:%M %p")),
-                "products":[
-                    matching_product
-                ]
             }
             client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
-            
             print("CLIENT:", type(client))
 
-            subject = "Your Receipt from the Green Grocery Store"
+            #subject = "Your Receipt from the Green Grocery Store"
 
-            html_content = "Hello. Here is your receipt"
+            #html_content = "Hello. Here is your receipt"
             #
             # or maybe ...
             #html_content = "Hello <strong>World</strong>"
@@ -220,13 +216,17 @@ if __name__ == "__main__":
             #    {html_list_items}
             #</ol>
             #"""
-            print("HTML:", html_content)
+            #print("HTML:", html_content)
 
-            message = Mail(from_email=MY_ADDRESS, to_emails=MY_ADDRESS, subject=subject, html_content=html_content)
+            message = Mail(from_email=MY_ADDRESS, to_emails=MY_ADDRESS) #, subject=subject, html_content=html_content)
+            print("MESSAGE:", type(message))
+
+            message.template_id = SENDGRID_TEMPLATE_ID
+
+            message.dynamic_template_data = template_data
 
             try:
                 response = client.send(message)
-
                 print("RESPONSE:", type(response)) #> <class 'python_http_client.client.Response'>
                 print(response.status_code) #> 202 indicates SUCCESS
                 print(response.body)
