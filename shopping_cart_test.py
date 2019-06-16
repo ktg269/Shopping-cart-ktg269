@@ -19,12 +19,12 @@ def test_find_product(): # to test find_product using one example (name)
     {"id":5, "name": "Green Chile Anytime Sauce", "department": "pantry", "aisle": "marinades meat preparation", "price": 7.99},
     ]
 
-    matching_product = find_product("5", products)
+    matching_product = find_product("5", products) #If works.
     assert matching_product["name"] == "Green Chile Anytime Sauce"
     assert matching_product["department"] == "pantry"
     assert matching_product["price"] == 7.99
 
-    with pytest.raises(IndexError):  # Looking up pre-defined, IndexError: https://stackoverflow.com/questions/52077389/how-to-only-report-failures-from-a-type-of-exception-with-pytest
+    with pytest.raises(IndexError):  # if not working. Looking up pre-defined using IndexError - resource: https://stackoverflow.com/questions/52077389/how-to-only-report-failures-from-a-type-of-exception-with-pytest
         find_product("10000000", products)
 
 from shopping_cart import human_friendly_timestamp
@@ -34,14 +34,15 @@ def test_human_friendly_timestamp(): # to test timestamp
     t = datetime.today()
     assert human_friendly_timestamp(t) == t.strftime("%Y-%m-%d %I:%M %p")
 
-#from shopping_cart import calculate_total_price
-
+#from shopping_cart import subtotal_price, sales_tax
+#
 #def test_calculate_total_price(): # to test total price
 #    products = [
 #    {"id":5, "name": "Green Chile Anytime Sauce", "department": "pantry", "aisle": "marinades meat preparation", "price": 7.99},
 #    {"id":6, "name": "Dry Nose Oil", "department": "personal care", "aisle": "cold flu allergy", "price": 21.99},
 #    ]
 #    
-#    matching_product = find_product("5", products)
-#    matching_product = find_product("6", products)
-#    assert test_calculate_total_price == 29.98
+#    valid_ids = [str(p["id"]) for p in products]
+#    
+#
+#    assert (subtotal_price + sales_tax) == 32.60
