@@ -22,3 +22,15 @@ def test_find_product(): # to test find_product using one example (name)
     assert matching_product["name"] == "Green Chile Anytime Sauce"
     assert matching_product["department"] == "pantry"
     assert matching_product["price"] == 7.99
+
+#from shopping_cart import calculate_total_price
+
+#def test_calculate_total_price(): # to test total price
+#    products = [
+#    {"id":5, "name": "Green Chile Anytime Sauce", "department": "pantry", "aisle": "marinades meat preparation", "price": 7.99},
+#    {"id":6, "name": "Dry Nose Oil", "department": "personal care", "aisle": "cold flu allergy", "price": 21.99},
+#    ]
+#    
+#    matching_product = find_product("5", products)
+#    matching_product = find_product("6", products)
+#    assert test_calculate_total_price == 29.98
