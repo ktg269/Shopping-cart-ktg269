@@ -1,5 +1,6 @@
 #shopping_cart_test.py
 
+import pytest
 from shopping_cart import to_usd
 
 def test_to_usd():   # to test price formatting
@@ -22,6 +23,10 @@ def test_find_product(): # to test find_product using one example (name)
     assert matching_product["name"] == "Green Chile Anytime Sauce"
     assert matching_product["department"] == "pantry"
     assert matching_product["price"] == 7.99
+
+    with pytest.raises(IndexError):  # Looking up pre-defined error: https://stackoverflow.com/questions/52077389/how-to-only-report-failures-from-a-type-of-exception-with-pytest
+        find_product("10000000", products)
+
 
 #from shopping_cart import calculate_total_price
 

@@ -1,5 +1,9 @@
 #shopping_cart.py
 
+
+
+
+
 def to_usd(store_price):
     return '${:,.2f}'.format(store_price)
 
@@ -7,6 +11,7 @@ def find_product(item_id, item_products):
     matching_products = [p for p in item_products if str(p["id"]) == str(item_id)]
     matching_product = matching_products[0]
     return matching_product
+
 
 #def calculate_total_price(store_total_price):
 #    sales_tax = subtotal_price * tax_rate
@@ -127,105 +132,79 @@ if __name__ == "__main__":
     #    return datetime.datetime.now().strftime(fmt).format(fname=fname)
 
 
-    # Ask whether receipt is desired
+    # Writing text file
+    myFile = open((os.path.join(os.path.dirname(__file__), "receipts", "myreceipt.txt")), "wt")
+    myFile.write("------------------------------\n")
+    myFile.write("YOUR RECEIPT:\n")
+    myFile.write("------------------------------\n")
+    myFile.write("BEST IN TOWN GROCERY\n")
+    myFile.write("100 UNIVERSITY ROAD\n")
+    myFile.write("NEW YORK, NY 10020\n")
+    myFile.write("TEL: 212-555-7777\n")
+    myFile.write("WWW.BESTINTOWNGROCERY.COM\n")
+    myFile.write("------------------------------\n")
+    myFile.write("CHECKOUT AT: " + t.strftime("%Y-%m-%d %I:%M %p\n"))
+    myFile.write("------------------------------\n")
     
+    for selected_id in selected_ids:
+        matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
+        matching_product = matching_products[0]      
+        myFile.write("... "  + matching_product["name"] + " (" + to_usd(matching_product["price"])+")\n")
+
+    myFile.write("------------------------------\n")
+    myFile.write("SUBTOTAL:      " + to_usd(subtotal_price))
+    myFile.write("\n")
+    myFile.write("TAX (8.75%):   " + to_usd(sales_tax))
+    myFile.write("\n")
+    myFile.write("               " + "-------")
+    myFile.write("\n")
+    myFile.write("TOTAL:         " + to_usd(total_price))
+    myFile.write("\n")
+    myFile.write("------------------------------\n")
+    myFile.write("THANK YOU FOR SHOPPING AT BEST IN TOWN GROCERY. WE HOPE TO SEE YOU AGAIN !")
+    myFile.write("\n")
+    myFile.write("------------------------------\n")
+
+
+    # Ask whether email-receipt is desired
     
+    receipt_print = input("WOULD YOU LIKE YOUR RECEIPT VIA EMAIL? y/n:")
     while True:
-        receipt_print = input("Would you like your email via email? y/n:")
-
+        
         if receipt_print =="n":
-
-            # Writing text file
-            myFile = open((os.path.join(os.path.dirname(__file__), "receipts", "myreceipt.txt")), "wt")
-
-            myFile.write("------------------------------\n")
-            myFile.write("BEST IN TOWN GROCERY\n")
-            myFile.write("100 UNIVERSITY ROAD\n")
-            myFile.write("NEW YORK, NY 10020\n")
-            myFile.write("TEL: 212-555-7777\n")
-            myFile.write("WWW.BESTINTOWNGROCERY.COM\n")
-            myFile.write("------------------------------\n")
-            myFile.write("CHECKOUT AT: " + t.strftime("%Y-%m-%d %I:%M %p\n"))
-            myFile.write("------------------------------\n")
-            myFile.write("Your requested receipt is below\n")
-            myFile.write("------------------------------\n")
-            myFile.write("... "  + matching_product["name"] + " (" + to_usd(matching_product["price"])+")")
-
-
-
-            myFile.write("------------------------------\n")
-            #for i in range (0,len(selected_id)):
-            #    myFile.write(selected_id[i]+"\t\t")
-            #    myFile.write(str(1)+"\t\t")
-            #    myFile.write(matching_product["name"]+"t\t")
-            #myFile.write("-------------------------------\n")
-
-
-
-
-            #with open(os.path.join('/path/to/Documents',completeName), "w") as file1:
-            #toFile = raw_input("receipt")
-            #file1.write(toFile)
-
-
-
-
-
-
-            #import os
-            #with open (os.path.join(os.path.dirname(__file__), "..", "receipts", "w")
-            #myFile = open("Receipt.txt", "wt")
-            #myFile.write("--------------------------\n")
-            #myFile.write("ITEM\t\tQUANTITY\t\tPRICE\n")
-
-
-            #myFile.write("selected products: \n")
-            #myFile.write("... "  + matching_product["name"] + " (" + to_usd(matching_product["price"])+")")
-            #myFile.write("--------------------------\n")
-
-
-            #for i in range (0,len(selected_id)):
-            #    myFile.write(selected_id[i]+"\t\t")
-            #    myFile.write(str(1)+"\t\t")
-            #    myFile.write(matching_product["name"]+"t\t")
-            #myFile.write("-------------------------------\n")
-    
-            ##total = 0
-    
-            ##for j in range (0, len(selected_id)):
-            #temp = price[j]
-            #total = total + temp
-            #myFile.write("\t\t\tTOTAL\t"+str(total)+"\n")
-            #myFile.write("-------------------------------\n")
-            ##myFile.write("")
-            ##myFile.write("")
-            ##myFile.write("")
-            #myFile.close()
-
-            print("PLEASE TAKE YOUR PAPER RECEIPT")
+                    
+            print("PLEASE TAKE YOUR PAPER RECEIPT. THANK YOU !")
             break
-
 
         # sending email receipt
 
         if receipt_print =="y":   
-
+            
             import os
             from dotenv import load_dotenv
             from sendgrid import SendGridAPIClient
             from sendgrid.helpers.mail import Mail
-
+            
             load_dotenv()
-
+            
             SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY", "OOPS, please set env var called 'SENDGRID_API_KEY'")
+            SENDGRID_TEMPLATE_ID = os.environ.get("SENDGRID_TEMPLATE_ID", "OOPS, please set env var called 'SENDGRID_TEMPLATE_ID'")
             MY_ADDRESS = os.environ.get("MY_EMAIL_ADDRESS", "OOPS, please set env var called 'MY_EMAIL_ADDRESS'")
-
+            
+            template_data = {
+                "total_price_usd": str(to_usd(total_price)),
+                "human_friendly_timestamp": str(t.strftime("%Y-%m-%d %I:%M %p")),
+                "products":[
+                    matching_product
+                ]
+            }
             client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
+            
             print("CLIENT:", type(client))
 
             subject = "Your Receipt from the Green Grocery Store"
 
-            html_content = "Hello World"
+            html_content = "Hello. Here is your receipt"
             #
             # or maybe ...
             #html_content = "Hello <strong>World</strong>"
