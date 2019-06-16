@@ -130,8 +130,8 @@ if __name__ == "__main__":
 
 
     # Writing text file
-    file_name = t.strftime("%Y-%m-%d-%H-%M-%S.%f") + ".txt" 
-    myFile = open((os.path.join(os.path.dirname(__file__), "receipts", file_name)), "wt")
+    file_name = t.strftime("%Y-%m-%d-%H-%M-%S.%f") + ".txt" # Per slack discussion with classmate.
+    myFile = open((os.path.join(os.path.dirname(__file__), "receipts", file_name)), "w")
     myFile.write("------------------------------\n")
     myFile.write("YOUR RECEIPT:\n")
     myFile.write("------------------------------\n")
