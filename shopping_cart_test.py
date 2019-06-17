@@ -34,15 +34,3 @@ def test_human_friendly_timestamp(): # to test timestamp
     t = datetime.today()
     assert human_friendly_timestamp(t) == t.strftime("%Y-%m-%d %I:%M %p")
 
-#from shopping_cart import subtotal_price, sales_tax
-#
-#def test_calculate_total_price(): # to test total price
-#    products = [
-#    {"id":5, "name": "Green Chile Anytime Sauce", "department": "pantry", "aisle": "marinades meat preparation", "price": 7.99},
-#    {"id":6, "name": "Dry Nose Oil", "department": "personal care", "aisle": "cold flu allergy", "price": 21.99},
-#    ]
-#    
-#    valid_ids = [str(p["id"]) for p in products]
-#    
-#
-#    assert (subtotal_price + sales_tax) == 32.60

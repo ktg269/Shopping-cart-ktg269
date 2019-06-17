@@ -12,11 +12,6 @@ def human_friendly_timestamp(time):
     from datetime import datetime
     t = datetime.today()
     return t.strftime("%Y-%m-%d %I:%M %p")
-
-#def calculate_total_price(store_total_price):
-    #sales_tax = subtotal_price * tax_rate
-    #store_total_price = subtotal_price + sales_tax
-    #return store_total_price
     
 if __name__ == "__main__":
 
@@ -94,10 +89,7 @@ if __name__ == "__main__":
     print("               " + "-------")
     print("TOTAL:         " + to_usd(total_price)) # The total amount owed, formatted as US dollars and cents (e.g. $4.89), calculated by adding together the amount of tax owed plus the total cost of all shopping cart items
     print("------------------------------")
-    
-    print("THANK YOU FOR SHOPPING AT BEST IN TOWN GROCERY. WE HOPE TO SEE YOU AGAIN !")  # A friendly message thanking the customer and/or encouraging the customer to shop again
-    print("------------------------------")
-      
+          
     import os, time
     
     file_name = t.strftime("%Y-%m-%d-%H-%M-%S.%f") + ".txt" # Writing text file with timestamp in the txt file name. Reference: Per slack discussion with classmate.   
@@ -129,15 +121,17 @@ if __name__ == "__main__":
     myFile.write("TOTAL:         " + to_usd(total_price))
     myFile.write("\n")
     myFile.write("------------------------------\n")
-    myFile.write("THANK YOU FOR SHOPPING AT BEST IN TOWN GROCERY. WE HOPE TO SEE YOU AGAIN !")
+    myFile.write("THANK YOU FOR SHOPPING AT BEST IN TOWN GROCERY. WE HOPE TO SEE YOU AGAIN !") # A friendly message thanking the customer and/or encouraging the customer to shop again
     myFile.write("\n")
     myFile.write("------------------------------\n")
 
-    receipt_print = input("WOULD YOU LIKE YOUR RECEIPT VIA EMAIL? Press y to receive or any other key to finish:") # Ask customer whether email-receipt is desired
+    receipt_print = input("WOULD YOU LIKE YOUR RECEIPT VIA EMAIL AS WELL? Press y to receive or any other key to finish:") # Ask customer whether he or she also want receipt in the email. 
     while True:
         
         if receipt_print =="y":   # sending email receipt
-            
+        
+            user_input = input("PLEASE ENTER YOUR EMAIL ADDRESS: ") # asking user email address for input.
+
             import os
             from dotenv import load_dotenv
             from sendgrid import SendGridAPIClient
@@ -149,7 +143,7 @@ if __name__ == "__main__":
             SENDGRID_TEMPLATE_ID = os.environ.get("SENDGRID_TEMPLATE_ID", "OOPS, please set env var called 'SENDGRID_TEMPLATE_ID'") #private information included in .env
             MY_ADDRESS = os.environ.get("MY_EMAIL_ADDRESS", "OOPS, please set env var called 'MY_EMAIL_ADDRESS'") #private information included in .env
             
-            template_data = {   #showing the checkout timestamp and the total price on the email receipt
+            template_data = {   # showing the checkout timestamp and the total price on the email receipt (minimum level of information per instruction)
                 "total_price_usd": str(to_usd(total_price)),
                 "human_friendly_timestamp": str(t.strftime("%Y-%m-%d %I:%M %p")),
                 
@@ -157,7 +151,7 @@ if __name__ == "__main__":
             client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
             print("CLIENT:", type(client))
 
-            message = Mail(from_email=MY_ADDRESS, to_emails=MY_ADDRESS) #, subject=subject, html_content=html_content) #email is from my email to my email for the purposes of this project.
+            message = Mail(from_email=MY_ADDRESS, to_emails=user_input) # For to_emails, MY_ADDRESS is replaced with user_input from line 133.
             print("MESSAGE:", type(message))
 
             message.template_id = SENDGRID_TEMPLATE_ID
@@ -174,11 +168,11 @@ if __name__ == "__main__":
             except Exception as e:
                 print("OOPS", e.message)
 
-            print("YOUR RECEIPT HAS BEEN SENT")
+            print("YOUR RECEIPT HAS BEEN SENT. THANK YOU AND WE HOPE TO SEE YOU AGAIN !") # A friendly message thanking the customer and/or encouraging the customer to shop again
             break
 
         else:
-            print("PLEASE TAKE YOUR PAPER RECEIPT. THANK YOU !") # No email receipt if customer does not select y.
+            print("PLEASE TAKE YOUR PAPER RECEIPT. THANK YOU AND WE HOPE TO SEE YOU AGAIN !") # No email receipt if customer does not select y.
             break
 
 
